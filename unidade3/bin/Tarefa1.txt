@@ -1,0 +1,5 @@
+Escreva o código de uma classe Java denominada "FiguraGeometrica". Essa classe:
+- deve ser declarada como "abstract"
+- deve ter um atributo "nome" para guardar o nome da figura geométrica
+- deve um método "getArea", que retorna um valor do tipo "double" correspondente à área da figura geométrica. Esse método deverá ser declarado como "abstract", porque iremos sobrescrevê-lo nas subclasses de "FiguraGeometrica".
+- um método "getDescricao", que retorna um valor do tipo "String" correspondente à descrição da figura geométrica. Esse método deverá ser declarado como "abstract", porque iremos sobrescrevê-lo nas subclasses de "FiguraGeometrica".
