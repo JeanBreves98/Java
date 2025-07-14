@@ -1,0 +1,22 @@
+Para essa tarefa, escreva uma classe contendo o método "main". Nesse método:
+- adicione comandos para criar objetos do tipo "Retangulo", "Triangulo" e "Circulo" (um objeto de cada tipo). 
+- adicione comandos para definir valores para os atributos desses objetos, usando os métodos "set" correspondentes. 
+- adicione o trecho de código abaixo, para adicionar os objetos criados em um ArrayList:
+
+    // Adiciona as figuras geometricas em uma lista
+    List<FiguraGeometrica> listaFigurasGeometricas = new ArrayList<>() ;
+    listaFigurasGeometricas.add( retangulo );   
+    listaFigurasGeometricas.add( triangulo );
+    listaFigurasGeometricas.add( circulo );
+    
+- adicione o trecho de código abaixo, para mostrar a descrição e a área das figuras que você adicionou na lista:
+
+    // Mostra dados das figuras geometricas
+    for(FiguraGeometrica figuraGeometrica : listaFigurasGeometricas) {
+        System.out.println( figuraGeometrica.getDescricao() );
+        System.out.printf( "Area da figura: %.2f \n", figuraGeometrica.getArea() );
+    }
+
+Você deve postar, para essa tarefa, o código do método "main" e também as mensagens que foram impressas no loop "for". (0.3 pontos)
+
+Comentário. Você observou, no loop da Tarefa 5, que estamos tratando nossos objetos do tipo "Retangulo", "Triangulo" e "Circulo" como objetos do tipo "FiguraGeometrica? Isso é o polimorfismo, na prática!

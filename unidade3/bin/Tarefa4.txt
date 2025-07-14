@@ -1,0 +1,9 @@
+Escreva o código de uma classe Java denominada "Circulo". Essa classe:
+- deve ser filha de "FiguraGeometrica"
+- deve ter um atributo "raio" para guardar o raio do círculo
+- deve ter um método "getArea", que sobrepõe o método definido na classe "FiguraGeometrica", e que retorna a área do círculo.
+- deve ter um método "getDescricao", que sobrepõe o método definido na classe "FiguraGeometrica", e que retorna um texto que mostra o valor do raio do círculo.
+
+Você deve postar, para essa tarefa, o código da sua classe "Circulo". (0.3 pontos)
+
+Importante: Os atributos da classe devem ser declarados como "private", e deve existir na classe métodos get/set declarados como "public" para acessar os atributos. 
