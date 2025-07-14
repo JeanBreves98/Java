@@ -1,0 +1,2 @@
+		System.out.print("Crie figuras geometricas:\n");
+		System.out.print("Lista de comandos disponíveis:\n1- Criar novo retângulo.\n2- Criar novo triângulo.\n3- Criar novo círculo.\n 0- Sair.\n");
