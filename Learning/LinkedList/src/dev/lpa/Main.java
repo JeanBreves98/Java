@@ -123,7 +123,7 @@ public class Main {
         System.out.println("Trip ends at " + list.getLast());
     }
 
-    private static void testIterator(LinkedList<String> list) {
+    private static void testIterator(LinkedList<String> list) { // The iterator rests between positions
         var iterator = list.listIterator();
 
         while (iterator.hasNext()) {
