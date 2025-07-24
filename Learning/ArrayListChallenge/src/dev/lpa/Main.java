@@ -1,13 +1,10 @@
 package dev.lpa;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<String> groceriesList = new ArrayList<>();
-
         boolean running = true;
 
         System.out.println("Available actions:");
