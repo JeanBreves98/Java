@@ -2,40 +2,30 @@ package dev.lpa;
 
 import java.util.ArrayList;
 
-record Customer(String name, ArrayList<Double> transactions) {
-
-    public Customer(String name, double initialDeposit) {
+record Customer (String name, ArrayList<Double> transactions) {
+    public Customer (String name, double initialDeposit) {
         this(name.toUpperCase(), new ArrayList<Double>(500));
         transactions.add(initialDeposit);
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "name='" + name + '\'' +
-                ", transactions=" + transactions +
-                '}';
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        Customer customer1 = new Customer("Tim", 1000);
-        Customer customer2 = new Customer("Joe", 0);
+        Customer bob = new Customer("Bob S", 1000);
+        System.out.println("Bob");
 
-        Bank bank = new Bank("My Bank");
+        Bank bank = new Bank("Chase");
+        bank.addNewCustomer("Jane A", 500);
+        System.out.println(bank);
 
-        Customer duplicateTim = new Customer("tim", 300);
+        bank.addTransaction("Jane A", -10.25);
+        bank.addTransaction("jane A", -75.01);
+        bank.printStatement("Jane a");
 
-        bank.addCustomer(customer1);
-        bank.addCustomer(customer2);
-        bank.addCustomer(duplicateTim);
+        bank.addNewCustomer("Bob S", 25);
+        bank.addTransaction("Bob S", 1000);
+        bank.printStatement("Bob S");
 
-        bank.addTransaction(customer1, 250.0);
-        bank.addTransaction(customer2, -50.0);
-        bank.addTransaction(new Customer("NotExist", 0), 100.0);
-
-        bank.print();
 
     }
 }
@@ -48,28 +38,52 @@ class Bank {
         this.name = name;
     }
 
-    public void addCustomer(Customer customer) {
-        for (Customer c : customers) {
-            if (c.name().equalsIgnoreCase(customer.name())) {
-                System.out.println("This customer has already been added");
-                return;
+    private Customer getCustomer (String customerName) {
+        for (var customer : customers) {
+            if (customer.name().equalsIgnoreCase(customerName)) {
+                return customer;
             }
         }
+        System.out.printf("Customer (%s) wasn't found %n", customerName);
 
-        customers.add(customer);
+        return null;
     }
 
-    public void addTransaction(Customer customer, Double value) {
-        for (Customer c : customers) {
-            if (c.name().equalsIgnoreCase(customer.name())) {
-                c.transactions().add(value);
-            }
+    public void addNewCustomer(String customerName, double initialDeposit) {
+        if (getCustomer(customerName) == null) {
+            Customer customer = new Customer (customerName, initialDeposit);
+            customers.add(customer);
+            System.out.println("New customer added: " + customer);
         }
     }
 
-    public void print() {
-        for (Customer customer : customers) {
-            System.out.println(customer);
+    public void addTransaction(String name, double transactionAmount) {
+        Customer customer = getCustomer(name);
+        if (customer != null) {
+            customer.transactions().add(transactionAmount);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "name='" + name + '\'' +
+                ", customers=" + customers +
+                '}';
+    }
+
+    public void printStatement (String customerName) {
+        Customer customer = getCustomer(customerName);
+
+        if (customer == null) {
+            return;
+        }
+
+        System.out.println("-".repeat(30));
+        System.out.println("Customer Name: " + customer.name());
+        System.out.println("Transactions:");
+        for (double d : customer.transactions()) {
+            System.out.printf("$%10.2f (%s)%n", d, d < 0 ? "debit" : "credit");
         }
     }
 }
