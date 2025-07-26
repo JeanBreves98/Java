@@ -9,12 +9,12 @@ public class Main {
 
         for (int i = 0; i < 10; i++) {
             weekDay = getRandomDay();
-//            System.out.printf("Name is %s, Ordinal Value = %d%n", weekDay.name(), weekDay.ordinal());
-//
-//            if (weekDay == DayOfTheWeek.FRI) {
-//                System.out.println("Found a Friday!!!");
-//
-//            }
+            System.out.printf("Name is %s, Ordinal Value = %d%n", weekDay.name(), weekDay.ordinal());
+
+            if (weekDay == DayOfTheWeek.FRI) {
+                System.out.println("Found a Friday!!!");
+
+            }
             switchDayOfWeek(weekDay);
         }
 
