@@ -1,7 +1,7 @@
 package dev.lpa;
 
 public interface NodeList {
-    abstract void getRoot();
+    abstract ListItem getRoot();
 
     abstract boolean addItem(ListItem item);
 

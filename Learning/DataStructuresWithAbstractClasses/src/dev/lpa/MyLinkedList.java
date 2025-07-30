@@ -8,8 +8,9 @@ public class MyLinkedList implements NodeList{
     }
 
     @Override
-    public void getRoot() {
+    public ListItem getRoot() {
 
+        return root;
     }
 
     @Override
@@ -29,6 +30,7 @@ public class MyLinkedList implements NodeList{
                 } else {
                     currentItem.setNext(item);
                     item.setPrevious(currentItem);
+                    return true;
                 }
             } else if (comparison > 0) {
                 item.setNext(currentItem);
