@@ -1,7 +1,8 @@
 package dev.lpa;
 
 public class SearchTree implements NodeList {
-    private ListItem root;
+
+    private ListItem root = null;
 
     public SearchTree(ListItem root) {
         this.root = root;
@@ -9,118 +10,134 @@ public class SearchTree implements NodeList {
 
     @Override
     public ListItem getRoot() {
-        return root;
+        return this.root;
     }
 
     @Override
-    public boolean addItem(ListItem item) {
-        if (root == null) {
-            root = item;
+    public boolean addItem(ListItem newItem) {
+
+        if (this.root == null) {
+            // the tree was empty, so our item becomes the head of the tree
+            this.root = newItem;
             return true;
         }
 
-        ListItem current = root;
-
-        while (current != null) {
-            int comparison = current.compareTo(item);
+        // otherwise, start comparing from the head of the tree
+        ListItem currentItem = this.root;
+        while (currentItem != null) {
+            int comparison = (currentItem.compareTo(newItem));
             if (comparison < 0) {
-                if (current.next() != null) {
-                    current = current.next();
+                // newItem is greater, move right if possible
+                if (currentItem.next() != null) {
+                    currentItem = currentItem.next();
                 } else {
-                    current.setNext(item);
+                    // there's no node to the right, so add at this point
+                    currentItem.setNext(newItem);
                     return true;
                 }
             } else if (comparison > 0) {
-                if (current.previous() != null) {
-                    current = current.previous();
+                // newItem is less, move left if possible
+                if (currentItem.previous() != null) {
+                    currentItem = currentItem.previous();
                 } else {
-                    current.setPrevious(item);
+                    // there's no node to the left, so add at this point
+                    currentItem.setPrevious(newItem);
                     return true;
                 }
             } else {
+                // equal, so don't add
+                System.out.println(newItem.getValue() + " is already present");
                 return false;
             }
         }
-
+        // we can't actually get here, but Java complains if there's no return
         return false;
     }
 
     @Override
     public boolean removeItem(ListItem item) {
+
         if (item != null) {
             System.out.println("Deleting item " + item.getValue());
         }
+        ListItem currentItem = this.root;
+        ListItem parentItem = currentItem;
 
-        ListItem current = root;
-        ListItem parent = current;
-
-        while (current != null) {
-            int comparison = current.compareTo(item);
+        while (currentItem != null) {
+            int comparison = (currentItem.compareTo(item));
             if (comparison < 0) {
-                parent = current;
-                current = current.next();
+                parentItem = currentItem;
+                currentItem = currentItem.next();
             } else if (comparison > 0) {
-                parent = current;
-                current = current.previous();
+                parentItem = currentItem;
+                currentItem = currentItem.previous();
             } else {
-                performRemoval(current, parent);
+                // equal: we've found the item so remove it
+                performRemoval(currentItem, parentItem);
                 return true;
             }
         }
-
         return false;
     }
 
-    private void performRemoval(ListItem toBeRemoved, ListItem parent) {
-        if (toBeRemoved.next() == null && toBeRemoved.previous() == null) {
-            if (parent.next() == toBeRemoved) {
-                parent.setNext(null);
-            } else if (parent.previous() == toBeRemoved) {
-                parent.setPrevious(null);
+
+    private void performRemoval(ListItem item, ListItem parent) {
+        // remove item from the tree
+        if (item.next() == null) {
+            // no right tree, so make parent point to left tree (which may be null)
+            if (parent.next() == item) {
+                // item is right child of its parent
+                parent.setNext(item.previous());
+            } else if (parent.previous() == item) {
+                // item is left child of its parent
+                parent.setPrevious(item.previous());
             } else {
-                root = null;
+                // parent must be item, which means we were looking at the root of the tree
+                this.root = item.previous();
             }
-        } else if (toBeRemoved.previous() == null) {
-            if (parent.next() == toBeRemoved) {
-                parent.setNext(toBeRemoved.next());
-            } else if (parent.previous() == toBeRemoved) {
-                parent.setPrevious(toBeRemoved.next());
+        } else if (item.previous() == null) {
+            // no left tree, so make parent point to right tree (which may be null)
+            if (parent.next() == item) {
+                // item is right child of its parent
+                parent.setNext(item.next());
+            } else if (parent.previous() == item) {
+                // item is left child of its parent
+                parent.setPrevious(item.next());
             } else {
-                root = toBeRemoved.next();
-            }
-        } else if (toBeRemoved.next() == null) {
-            if (parent.next() == toBeRemoved) {
-                parent.setNext(toBeRemoved.previous());
-            } else if (parent.previous() == toBeRemoved) {
-                parent.setPrevious(toBeRemoved.previous());
-            } else {
-                root = toBeRemoved.previous();
+                // again, we are deleting the root
+                this.root = item.next();
             }
         } else {
-            ListItem current = toBeRemoved.next();
-            ListItem leftMostParent = toBeRemoved;
-
+            // neither left nor right are null, deletion is now a lot trickier!
+            // From the right sub-tree, find the smallest value (i.e., the leftmost).
+            ListItem current = item.next();
+            ListItem leftmostParent = item;
             while (current.previous() != null) {
-                leftMostParent = current;
+                leftmostParent = current;
                 current = current.previous();
             }
-
-            toBeRemoved.setValue(current.getValue());
-
-            if (leftMostParent == toBeRemoved) {
-                toBeRemoved.setNext(current.next());
+            // Now put the smallest value into our node to be deleted
+            item.setValue(current.getValue());
+            // and delete the smallest
+            if (leftmostParent == item) {
+                // there was no leftmost node, so 'current' points to the smallest
+                // node (the one that must now be deleted).
+                item.setNext(current.next());
             } else {
-                leftMostParent.setPrevious(current.next());
+                // set the smallest node's parent to point to
+                // the smallest node's right child (which may be null).
+                leftmostParent.setPrevious(current.next());
             }
         }
     }
 
     @Override
     public void traverse(ListItem root) {
+
         if (root != null) {
-            traverse(root.previous());
+            traverse(root.previous()); // to the left of root
             System.out.println(root.getValue());
-            traverse(root.next());
+            traverse(root.next()); // to the right of root
         }
     }
 }

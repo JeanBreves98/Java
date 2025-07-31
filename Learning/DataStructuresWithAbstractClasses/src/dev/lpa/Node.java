@@ -1,7 +1,6 @@
 package dev.lpa;
 
-public class Node extends ListItem{
-
+public class Node extends ListItem {
 
     public Node(Object value) {
         super(value);
@@ -9,32 +8,34 @@ public class Node extends ListItem{
 
     @Override
     ListItem next() {
-        return rightLink;
+        return this.rightLink;
     }
 
     @Override
     ListItem setNext(ListItem item) {
-        rightLink = item;
-        return rightLink;
+        this.rightLink = item;
+        return this.rightLink;
     }
 
     @Override
     ListItem previous() {
-        return leftLink;
+        return this.leftLink;
     }
 
     @Override
     ListItem setPrevious(ListItem item) {
-        leftLink = item;
-        return leftLink;
+        this.leftLink = item;
+        return this.leftLink;
     }
 
     @Override
     int compareTo(ListItem item) {
-        if (this.getValue() instanceof Comparable && item.getValue() instanceof Comparable) {
-            Comparable<Object> x = (Comparable<Object>) this.getValue();
-            return x.compareTo(item.getValue());
+
+        if (item != null) {
+            return ((String) super.getValue()).compareTo((String) item.getValue());
+        } else {
+            return -1;
         }
-        return 0;
     }
 }
+
