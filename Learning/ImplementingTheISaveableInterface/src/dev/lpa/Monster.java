@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 package dev.lpa;
 
+=======
+>>>>>>> 62ea25f38c81d03321eb57b4c5df2422e1167861
 import java.util.List;
 
 public class Monster implements ISaveable{
@@ -42,7 +45,14 @@ public class Monster implements ISaveable{
     @Override
     public String toString() {
         return String.format("""
+<<<<<<< HEAD
                 Monster{name='%s', hitPoints=%d, strength=%d}""", getName(),getHitPoints(),getStrength());
 
     }
 }
+=======
+                Monster:{name='%s', hitPoints=%d, strength=%d""", getName(),getHitPoints(),getStrength());
+
+    }
+}
+>>>>>>> 62ea25f38c81d03321eb57b4c5df2422e1167861
