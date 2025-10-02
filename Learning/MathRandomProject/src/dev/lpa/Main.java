@@ -1,5 +1,7 @@
 package dev.lpa;
 
+import java.util.Random;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -29,9 +31,46 @@ public class Main {
         System.out.println("10 to the fifth power (10*10*10*10*10) = " + Math.pow(10, 5));
 
         for(int i = 0; i < 10; i++){
-            System.out.println(Math.random() * 10);
+            System.out.printf("%1$d = %1$c%n", (int) (Math.random() * 26) + 65);
         }
 
-
+        System.out.println("-".repeat(50));
+        Random r = new Random();
+        for (int i = 0; i < 10; i++) {
+            System.out.printf("%1$d = %1$c%n", r.nextInt(65, 91));
         }
+
+        System.out.println("-".repeat(50));
+        for (int i = 0; i < 10; i++) {
+            System.out.printf("%1$d = %1$c%n", r.nextInt((int) 'A', (int) 'Z' + 1));
+        }
+
+        System.out.println("-".repeat(50));
+        for (int i = 0; i < 10; i++) {
+            System.out.printf("%1$d%n", r.nextInt(-10, 11));
+        }
+
+        System.out.println("-".repeat(50));
+        r.ints().limit(10).forEach(System.out::println);
+
+        System.out.println("-".repeat(50));
+        r.ints(0, 10).limit(10).forEach(System.out::println);
+
+        System.out.println("-".repeat(50));
+        r.ints(10, 0, 10).forEach(System.out::println);
+
+        System.out.println("-".repeat(50));
+        r.ints(10).forEach(System.out::println);
+
+        long nanoTime = System.nanoTime();
+        Random pseudoRandom = new Random(nanoTime);
+        System.out.println("-".repeat(50));
+        pseudoRandom.ints(10, 0, 10).forEach(i -> System.out.print(i + " "));
+
+        Random notReallyRandom = new Random(nanoTime);
+        System.out.println("\n---------------------------------------------");
+        notReallyRandom.ints(10, 0, 10).forEach(i -> System.out.print(i + " "));
+
+
+    }
 }
