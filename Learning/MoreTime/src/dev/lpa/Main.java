@@ -3,7 +3,7 @@ package dev.lpa;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
@@ -84,5 +84,26 @@ public class Main {
         Duration timeSince2 =
                 Duration.between(Instant.EPOCH, dob2.toInstant(ZoneOffset.UTC));
         System.out.println(timeSince2);
+
+        for (ChronoUnit u : ChronoUnit.values()) {
+            if(u.isSupportedBy(LocalDate.EPOCH)) {
+                long val = u.between(LocalDate.EPOCH, dob2.toLocalDate());
+                System.out.println(u + " past = " + val);
+            } else {
+                System.out.println("-- Not supported: " + u);
+            }
+        }
+
+        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC);
+
+        for (ChronoUnit u : ChronoUnit.values()) {
+            if(u.isSupportedBy(ldt)) {
+                long val = u.between(ldt, dob2);
+                System.out.println(u + " past = " + val);
+            } else {
+                System.out.println("-- Not supported: " + u);
+            }
+        }
+
     }
 }
