@@ -27,6 +27,6 @@ public class Main {
                     null,
                     new Object[] {rb.getString("yes"), rb.getString("no")},
                     null);
-        }
+        }   
     }
 }
