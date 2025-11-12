@@ -45,5 +45,10 @@ public class Main {
             System.out.println(htmlMatcher.group("level") + " " + htmlMatcher.group(2));
             System.out.println("index = " + htmlMatcher.start("level"));
         }
+
+        htmlMatcher.reset();
+        htmlMatcher.results().forEach(mr -> System.out.println(mr.group(1) + " " + mr.group(2)));
+
+
     }
 }
