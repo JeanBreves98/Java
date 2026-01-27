@@ -49,6 +49,22 @@ public class Main {
         htmlMatcher.reset();
         htmlMatcher.results().forEach(mr -> System.out.println(mr.group(1) + " " + mr.group(2)));
 
+        String tabbedText = """
+                group1  group2  group3
+                1   2   3
+                a   b   d
+                """;
 
+        tabbedText.lines()
+                .flatMap(s -> Pattern.compile("\\t").splitAsStream(s))
+                .forEach(System.out::println);
+
+        htmlMatcher.reset();
+        String updatedSnippet = htmlMatcher.replaceFirst((mr) ->
+                "<em>" + mr.group(2) + "</em>");
+        System.out.println("-".repeat(20));
+        System.out.println(updatedSnippet);
+        System.out.println(htmlMatcher.start() + " : " + htmlMatcher.end());
+        System.out.println(htmlMatcher.group(2));
     }
 }
