@@ -66,5 +66,31 @@ public class Main {
         System.out.println(updatedSnippet);
         System.out.println(htmlMatcher.start() + " : " + htmlMatcher.end());
         System.out.println(htmlMatcher.group(2));
+
+        htmlMatcher.usePattern(
+                Pattern.compile("<([hH]\\d)>(.*)</\\1>"));
+
+        htmlMatcher.reset();
+        System.out.println("-".repeat(20));
+        System.out.println("Using Back Reference: \n" + htmlMatcher.replaceFirst("<em>$2</em>"));
+
+        String replacedHTML = htmlMatcher.replaceAll((mr) ->
+                "<em>" + mr.group(2) + "</em>");
+        System.out.println("-".repeat(20));
+        System.out.println(replacedHTML);
+
+        htmlMatcher.reset();
+        StringBuilder sb = new StringBuilder();
+        int index = 1;
+        while (htmlMatcher.find()) {
+            htmlMatcher.appendReplacement(sb,
+                    switch (htmlMatcher.group(1).toLowerCase()) {
+                case "h1" -> "<head>$2</head>";
+                case "h2" -> "<em>$2</em>";
+                default -> "<$1>" + index++ + ". $2</$1>";
+                    });
+        }
+        htmlMatcher.appendTail(sb);
+        System.out.println(sb.toString());
     }
 }
